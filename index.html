@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Feliz Aniversário</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="stage" id="stage">
+  <div class="stars" id="stars"></div>
+  <div class="envelope-wrap" id="envelope" tabindex="0" role="button" aria-label="Abrir cartão de aniversário">
+    <div class="envelope-body"></div>
+    <div class="envelope-shadow-fold"></div>
+    <div class="envelope-flap"></div>
+    <div class="seal">❤</div>
+    <div class="hint">toque para abrir</div>
+  </div>
+
+  <div class="card" id="card">
+    <div class="card-eyebrow">Um recado especial</div>
+    <h1 class="card-title">Feliz Aniversário!</h1>
+    <h2 class="card-name" contenteditable="true" spellcheck="false">para você</h2>
+    <p class="card-message" contenteditable="true" spellcheck="false">Que seu novo ano de vida venha cheio de motivos pra sorrir, exatamente aquilo que seu coração está pedindo. Hoje o dia é seu dia aproveita cada minuto!</p>
+    <div class="card-footer">
+      <span class="line"></span>
+      <span class="icon">✦</span>
+      <span class="line"></span>
+    </div>
+    <div class="edit-note">Com carinho Tati.</div>
+  </div>
+</div>
+
+<script>
+  const starsWrap = document.getElementById('stars');
+  for(let i=0;i<28;i++){
+    const s = document.createElement('span');
+    s.style.left = Math.random()*100+'%';
+    s.style.top = Math.random()*100+'%';
+    s.style.animationDelay = (Math.random()*3)+'s';
+    starsWrap.appendChild(s);
+  }
+
+  const envelope = document.getElementById('envelope');
+  const card = document.getElementById('card');
+  let opened = false;
+
+  function openCard(){
+    if(opened) return;
+    opened = true;
+    envelope.classList.add('open');
+    setTimeout(()=>{
+      envelope.classList.add('hidden');
+      card.classList.add('show');
+      burstConfetti();
+    }, 550);
+  }
+
+  envelope.addEventListener('click', openCard);
+  envelope.addEventListener('keydown', (e)=>{
+    if(e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openCard(); }
+  });
+
+  function burstConfetti(){
+    const colors = ['#ff6f5e', '#ffc857', '#f7b6c2', '#ffffff', '#b3283d'];
+    for(let i=0;i<70;i++){
+      const c = document.createElement('div');
+      c.className = 'confetti';
+      c.style.left = Math.random()*100+'vw';
+      c.style.background = colors[Math.floor(Math.random()*colors.length)];
+      c.style.animationDuration = (2.2 + Math.random()*1.6)+'s';
+      c.style.animationDelay = (Math.random()*0.4)+'s';
+      c.style.opacity = 0.85+Math.random()*0.15;
+      document.body.appendChild(c);
+      setTimeout(()=>c.remove(), 4200);
+    }
+  }
+</script>
+
+</body>
+</html>
